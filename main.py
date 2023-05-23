@@ -31,10 +31,10 @@ for b in range(1,len(brands)+50):
         
         for m in range(1,len(models)+50):
             try:
-                model_slug = str(driver.find_element(By.CSS_SELECTOR,f'#__layout > div > div.main-wrapper.sell-type-wrapper > div > div > div.content > div > div > div > button:nth-child({m})').get_attribute('data-trackervalue')).replace(',',' ')
+                model_slug = driver.find_element(By.CSS_SELECTOR,f'#__layout > div > div.main-wrapper.sell-type-wrapper > div > div > div.content > div > div > div > button:nth-child({m})').get_attribute('data-trackervalue')
                 model = driver.find_element(By.CSS_SELECTOR,f'#__layout > div > div.main-wrapper.sell-type-wrapper > div > div > div.content > div > div > div > button:nth-child({m}) > span > span')
                 model_name = str(model.get_attribute('textContent')).strip()
-                models_data.append({'name': model_name,'slug': model_slug,'name_en': model_slug.capitalize()})
+                models_data.append({'name': model_name,'slug': str(model_slug).replace(',','-'),'name_en':str(model_slug).replace(',',' ').capitalize()})
             except:
                 continue
             
@@ -60,3 +60,5 @@ driver.close()
 end_time = time()
 
 print(f'End Time : {round(end_time-start_time)}S')
+
+
